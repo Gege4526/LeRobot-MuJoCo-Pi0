@@ -9,8 +9,8 @@
 - [Setup](#setup)
 - [1. Collect Demonstration Data](#1-collect-demonstration-data)
 - [2. Playback Your Data](#2-playback-your-data)
-- [3. Train Action Chunking Transformer (ACT)](#3-train-action-chunking-transformer-act)
-- [Reference](#reference-1)
+- [3. Train Action Chunking Transformer (Pi0)](#3-train-action-chunking-transformer-pi0)
+- [Reference](#reference)
 
 
 
@@ -20,7 +20,10 @@
 
 **π₀** is a **VLA** model developed by Physical Intelligence for general-purpose robot control.
 
-Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained **VLM** with a specialized **action expert** to generate continuous robot actions.
+Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained **VLM** with a specialized **action expert** to generate continuous robot actions.  π₀ is a **single transformer with two sets of weights**.
+
+> [!IMPORTANT]
+> **VLM** focuses on **understanding the scene**, while the **Action Expert** determines **how the robot should move**. Their parameters are independent, but they exchange information through the **attention mechanism at each Transformer layer**.
 
 <p align="center">
   <img src="assets/overview_pi0.jpg" width="900">
@@ -44,17 +47,68 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
   <img src="assets/PaliGemma.jpg" width="800">
 </p>
 
-> [!IMPORTANT]
-> π₀ extends **PaliGemma** with three main modifications:
->
-> 1. **Robot State & Action Projection** – maps continuous robot states and actions into Transformer representations.
-> 2. **Flow-Matching Time Embedding** – encodes the flow timestep $\tau$ using an additional MLP.
-> 3. **Action Expert** – a smaller Transformer specialized for continuous robot action generation.
-
-
 #### 2. Action Expert
-conditional flow matching
-action chunk
+**🌊conditional flow matching**: random noise -> valid action trajectories.
+
+
+Instead of directly predicting the final action, the model learns a **vector field** that tells a noisy action in which direction it should move toward the real action.
+
+**Training** 
+
+A noisy action is constructed as:
+
+$$
+A_t^\tau = \tau A_t + (1-\tau)\epsilon
+$$
+
+where:
+
+- $A_t$: ground-truth action chunk
+- $\epsilon \sim \mathcal{N}(0, I)$: random noise
+- $\tau \in [0,1]$: flow-matching timestep
+
+Therefore:
+
+$$
+\tau=0 \Rightarrow A_t^\tau=\epsilon
+$$
+
+while:
+
+$$
+\tau=1 \Rightarrow A_t^\tau=A_t
+$$
+
+is the real action.
+
+The model learns:
+
+$$
+v_\theta(A_t^\tau,o_t)
+$$
+
+which predicts the direction in which the noisy action should move. In π₀, the target vector field is:
+
+$$
+v_\theta(A_t^\tau,o_t)\approx A_t-\epsilon
+$$
+
+**Inference**
+
+At inference time, π₀ starts from random noise:
+
+$$
+A_t^0\sim\mathcal N(0,I)
+$$
+
+and repeatedly updates the action using:
+
+$$
+A_t^{\tau+\delta} =
+A_t^\tau+\delta v_\theta(A_t^\tau,o_t)
+$$
+
+π₀ uses **10 integration steps** with \($\delta=0.1\$).
 
 ## Setup
 ```bash
