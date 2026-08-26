@@ -87,7 +87,7 @@ $$
 v_\theta(A_t^\tau,o_t)
 $$
 
-which predicts the direction in which the noisy action should move. In π₀, the target vector field is:
+which predicts the direction in which the noisy action should move. In π₀, the training goal is:
 
 $$
 v_\theta(A_t^\tau,o_t)\approx A_t-\epsilon
