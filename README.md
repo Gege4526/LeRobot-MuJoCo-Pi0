@@ -1,4 +1,4 @@
-# Training ACT with LeRobot in MuJoCo
+# Training Pi0 with LeRobot in MuJoCo
 
 ## Table of Contents
 - [📚 Theory](#-theory)
