@@ -1,0 +1,47 @@
+[1m[34mLogs will be synced with wandb.[0m
+INFO 2026-08-26 15:36:09 ndb_utils.py:96 Track this run --> [1m[33mhttps://wandb.ai/gege074526/pi0/runs/e7rxdng7[0m
+INFO 2026-08-26 15:36:09 in_model.py:127 Creating dataset
+Resolving data files: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 20/20 [00:00<00:00, 6357.90it/s]
+INFO 2026-08-26 15:36:10 in_model.py:138 Creating policy
+tokenizer_config.json: 40.0kB [00:00, 43.2MB/s]
+tokenizer.model: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 4.26M/4.26M [00:02<00:00, 2.02MB/s]
+tokenizer.json: 100%|███████████████████████████████████████████████████████████████████████████████████████████████| 17.5M/17.5M [00:01<00:00, 17.4MB/s]
+added_tokens.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████████| 24.0/24.0 [00:00<00:00, 55.6kB/s]
+special_tokens_map.json: 100%|██████████████████████████████████████████████████████████████████████████████████████████| 607/607 [00:00<00:00, 1.38MB/s]
+model.safetensors: 100%|████████████████████████████████████████████████████████████████████████████████████████████| 14.0G/14.0G [16:05<00:00, 14.5MB/s]
+Traceback (most recent call last):
+  File "/home/gege/LeRobot-MuJoCo-Pi0/3.train_model.py", line 292, in <module>
+    train()
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/configs/parser.py", line 226, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/home/gege/LeRobot-MuJoCo-Pi0/3.train_model.py", line 143, in train
+    policy = make_policy(
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/common/policies/factory.py", line 154, in make_policy
+    policy = policy_cls.from_pretrained(**kwargs)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/common/policies/pretrained.py", line 127, in from_pretrained
+    policy = cls._load_as_safetensor(instance, model_file, config.device, strict)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/common/policies/pretrained.py", line 150, in _load_as_safetensor
+    safetensors.torch.load_model(model, model_file, strict=strict, device=map_location)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/safetensors/torch.py", line 202, in load_model
+    state_dict = load_file(filename, device=device)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/safetensors/torch.py", line 315, in load_file
+    result[k] = f.get_tensor(k)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 7.53 GiB of which 7.31 MiB is free. Including non-PyTorch memory, this process has 7.50 GiB memory in use. Of the allocated memory 7.36 GiB is allocated by PyTorch, and 52.97 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)
+Traceback (most recent call last):
+  File "/home/gege/LeRobot-MuJoCo-Pi0/3.train_model.py", line 292, in <module>
+    train()
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/configs/parser.py", line 226, in wrapper_inner
+    response = fn(cfg, *args, **kwargs)
+  File "/home/gege/LeRobot-MuJoCo-Pi0/3.train_model.py", line 143, in train
+    policy = make_policy(
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/common/policies/factory.py", line 154, in make_policy
+    policy = policy_cls.from_pretrained(**kwargs)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/common/policies/pretrained.py", line 127, in from_pretrained
+    policy = cls._load_as_safetensor(instance, model_file, config.device, strict)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/lerobot/common/policies/pretrained.py", line 150, in _load_as_safetensor
+    safetensors.torch.load_model(model, model_file, strict=strict, device=map_location)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/safetensors/torch.py", line 202, in load_model
+    state_dict = load_file(filename, device=device)
+  File "/home/gege/miniconda3/envs/py310/lib/python3.10/site-packages/safetensors/torch.py", line 315, in load_file
+    result[k] = f.get_tensor(k)
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 16.00 MiB. GPU 0 has a total capacity of 7.53 GiB of which 7.31 MiB is free. Including non-PyTorch memory, this process has 7.50 GiB memory in use. Of the allocated memory 7.36 GiB is allocated by PyTorch, and 52.97 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://docs.pytorch.org/docs/stable/notes/cuda.html#optimizing-memory-usage-with-pytorch-cuda-alloc-conf)

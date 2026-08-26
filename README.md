@@ -26,7 +26,7 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
 > **VLM** focuses on **understanding the scene**, while the **Action Expert** determines **how the robot should move**. Their parameters are independent, but they exchange information through the **attention mechanism at each Transformer layer**.
 
 <p align="center">
-  <img src="assets/overview_pi0.jpg" width="900">
+  <img src="my_pics/overview_pi0.jpg" width="900">
 </p>
 
 #### 1. Pre-trained VLM
@@ -44,7 +44,7 @@ Unlike ACT, which directly predicts action chunks, π₀ combines a pretrained *
 > Image Tokens + Text Tokens → Contextual Representations
 
 <p align="center">
-  <img src="assets/PaliGemma.jpg" width="800">
+  <img src="my_pics/PaliGemma.jpg" width="800">
 </p>
 
 #### 2. Action Expert
@@ -129,62 +129,20 @@ cd asset/objaverse
 unzip plate_11.zip
 ```
 ## 1. Collect Demonstration Data
+`1.language_env.ipynb`
 
-
-### 🎮 Keyboard Controls
-
-* `W/A/S/D`: Move along the **x-y plane**
-* `R/F`: Move along the **z-axis**
-* `Q/E`: Tilt the end-effector
-* `Arrow Keys`: Rotate the end-effector
-* `Space`: Toggle the gripper state
-* `Z`: Reset the environment and discard the cached data from the current episode
-
-### 🖥️ Observation Views
-
-The rendered observation contains four views:
-
-* **Top-right:** Agent view
-* **Bottom-right:** First-person wrist camera view
-* **Top-left:** Side view
-* **Bottom-left:** Top-down view
-
-### Data Structure
-```bash
-fps = 20,
-features={
-    "observation.image": {
-        "dtype": "image",
-        "shape": (256, 256, 3),
-        "names": ["height", "width", "channels"],
-    },
-    "observation.wrist_image": {
-        "dtype": "image",
-        "shape": (256, 256, 3),
-        "names": ["height", "width", "channel"],
-    },
-    "observation.state": {
-        "dtype": "float32",
-        "shape": (6,),
-        "names": ["state"], # x, y, z, roll, pitch, yaw
-    },
-    "action": {
-        "dtype": "float32",
-        "shape": (7,),
-        "names": ["action"], # 6 个关节角 + 1 个夹爪
-    },
-    "obj_init": {
-        "dtype": "float32",
-        "shape": (6,),
-        "names": ["obj_init"], # 仅物体初始位置，训练中不使用
-    },
-},
-```
+<p align="center">
+  <img src="my_pics/demo.gif" width="500">
+</p>
 
 ## 2. Playback Your Data
+`2.visualize_data.ipynb`
 
-
-## 3. Train Action Chunking Transformer (Pi0)
+## 3. Train and Deploy pi_0
+**Train**
+```bash
+python 3.train_model.py --config_path pi0_omy.yaml
+```
 
 
 ## Reference
