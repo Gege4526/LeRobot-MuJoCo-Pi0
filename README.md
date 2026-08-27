@@ -215,7 +215,7 @@ https://wandb.ai
 
 **Evaluation Result**
 
-The final success rate is **74.0% (17/20 episodes)**. An episode is counted as a failure if the task is not completed within **400 control steps (20 seconds at 20 Hz)**.
+The final success rate is **74.0% (37/50 episodes)**. An episode is counted as a failure if the task is not completed within **400 control steps (20 seconds at 20 Hz)**.
 
 <p align="center">
   <img src="my_pics/success_rate.png" width="600">
