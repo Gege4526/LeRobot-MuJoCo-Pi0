@@ -1,0 +1,31 @@
+{
+  "os": "Linux-6.17.0-35-generic-x86_64-with-glibc2.39",
+  "python": "CPython 3.10.20",
+  "startedAt": "2026-08-27T15:03:03.626858Z",
+  "args": [
+    "--config_path",
+    "smolvla_omy.yaml"
+  ],
+  "program": "/home/gege/LeRobot-MuJoCo-Pi0/3.train_model.py",
+  "codePath": "3.train_model.py",
+  "codePathLocal": "3.train_model.py",
+  "git": {
+    "remote": "git@github.com:Gege4526/LeRobot-MuJoCo-Pi0.git",
+    "commit": "b53d4dc766f0a160d7a47e0778fc32de510c94d2"
+  },
+  "root": "ckpt/smolvla_omy",
+  "host": "gege-LOQ-17IRX10",
+  "executable": "/home/gege/miniconda3/envs/py310/bin/python",
+  "cpu_count": 10,
+  "cpu_count_logical": 16,
+  "disk": {
+    "/": {
+      "total": "315926315008",
+      "used": "156120915968"
+    }
+  },
+  "memory": {
+    "total": "24890200064"
+  },
+  "writerId": "k6ondgjzcbnblrqcyoeog3uzuujq1yqb"
+}

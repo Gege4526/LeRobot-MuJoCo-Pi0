@@ -147,7 +147,13 @@ def train(cfg: TrainPipelineConfig):
 
     logging.info("Creating optimizer and scheduler")
     optimizer, lr_scheduler = make_optimizer_and_scheduler(cfg, policy)
-    grad_scaler = GradScaler(device.type, enabled=cfg.policy.use_amp)
+    # SmolVLA trains its expert in BF16. BF16 has enough exponent range and does
+    # not need gradient scaling; PyTorch's CUDA GradScaler cannot unscale BF16
+    # gradients. Keep autocast enabled while disabling only the scaler.
+    grad_scaler = GradScaler(
+        device.type,
+        enabled=cfg.policy.use_amp and cfg.policy.type != "smolvla",
+    )
 
     step = 0  # number of policy updates (forward + backward + optim)
 
